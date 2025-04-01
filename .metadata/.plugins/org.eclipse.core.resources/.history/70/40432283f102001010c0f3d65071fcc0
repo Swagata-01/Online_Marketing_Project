@@ -1,0 +1,38 @@
+package com.cts.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.cts.dto.RequestDTO;
+import com.cts.dto.ResponseDTO;
+import com.cts.exception.InvalidInputException;
+import com.cts.service.UserService;
+
+@RestController
+@RequestMapping("/register")
+public class UserController {
+	
+	@Autowired
+	private UserService userService;
+	
+	@PostMapping
+	public ResponseDTO createUser(@RequestBody @Validated RequestDTO requestDTO) {
+		if (requestDTO.getFirstName().isBlank() || requestDTO.getLastName().isBlank() || !requestDTO.getEmail().contains("@") || requestDTO.getPassword().isBlank() || requestDTO.getAddress().isBlank()) {
+            throw new InvalidInputException("Invalid input");
+        }
+		return userService.createUser(requestDTO);
+	}
+	
+	@GetMapping
+	public List<ResponseDTO> getAllUser(){
+		return userService.getAllUsers();
+	}
+	
+}

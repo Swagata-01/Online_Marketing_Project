@@ -1,0 +1,117 @@
+package com.cts.entity;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
+
+import com.cts.enums.UserRole;
+import com.cts.exception.AgeValidationException;
+import com.cts.exception.PhotoSizeValidationException;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Table(name="users")
+@Builder
+public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int userID;
+    
+    @Column(name="FirstName")
+    private String firstName;
+    
+   @Column(name="LastName")
+    private String lastName;
+    
+   @Column(name="Email")
+    private String email;
+    
+//    @Column(nullable = false)
+    @Column(name="Password")
+    private String password;
+    
+    @Column(name="NickName")
+    private String nickName;
+    
+ //   @Column(nullable = false)
+    @Column(name="Address")
+    private String address;
+    
+    @Column(name="ContactNumber")
+    private String contactNumber;
+    
+    @Lob
+    @Column(name="Photo")
+    private byte[] photo;
+    
+    @Column(name="DateOfBirth")
+    private Date dateOfBirth;
+    
+    @Enumerated(EnumType.STRING)
+ //   @Column(nullable = false)
+    @Builder.Default
+    @Column(name="UserRole")
+    private UserRole userRole=UserRole.USER;
+    
+    @Builder.Default
+    @Column(name="EmailVerification")
+    private boolean emailVerification=true;
+    
+    @Column(name="IsActive")
+    @Builder.Default
+    private boolean isActive=true;
+    
+ //   @Column(nullable = false)
+    @Builder.Default
+    @Column(name="AddedOn")
+    private LocalDateTime addedOn=LocalDateTime.now();
+ 
+//    @Column(name="updatedon", nullable = false)
+    
+    @Column(name="UpdatedOn")
+    @Builder.Default
+    private LocalDateTime updatedOn=LocalDateTime.now();
+    
+    @PrePersist
+    @PreUpdate
+    private void validate() {
+        validateAge();
+        validatePhotoSize();
+    }
+    
+    private void validateAge() {
+        LocalDate birthDate = dateOfBirth.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        int age = LocalDate.now().getYear() - birthDate.getYear();
+        if (age < 18) {
+            throw new AgeValidationException("User must be at least 18 years old.");
+        }
+    }
+    
+    private void validatePhotoSize() {
+        if (photo != null) {
+            int photoSize = photo.length / 1024;
+            if (photoSize < 10 || photoSize > 20) {
+                throw new PhotoSizeValidationException("Photo size must be between 10KB and 20KB.");
+            }
+        }
+    }
+}

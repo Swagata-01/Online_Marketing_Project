@@ -1,0 +1,73 @@
+package com.cts.service;
+
+import java.io.IOException;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.cts.entity.User;
+import com.cts.dto.RequestDTO;
+import com.cts.dto.ResponseDTO;
+import com.cts.mapper.UserMapper;
+import com.cts.repository.UserRepository;
+
+@Service
+public class UserService {
+
+    @Autowired
+    private UserRepository userRepository;
+
+    // Save user details and photo
+    public ResponseDTO addUserWithPhoto(RequestDTO requestDTO, MultipartFile photoFile) throws IOException {
+        User user = UserMapper.toEntity(requestDTO);
+        if (photoFile != null && !photoFile.isEmpty()) {
+            byte[] photoBytes = photoFile.getBytes();
+            user.setPhoto(photoBytes);
+        }
+        userRepository.save(user);
+        return UserMapper.toDTO(user);
+    }
+
+    // Fetch user details by ID
+    public ResponseDTO getUserById(Integer userId) {
+        Optional<User> user = userRepository.findById(userId);
+        if (user.isPresent()) {
+            return UserMapper.toDTO(user.get());
+        }
+        throw new RuntimeException("User not found");
+    }
+
+    // Update user details and photo
+    public ResponseDTO updateUserWithPhoto(Integer userId, RequestDTO requestDTO, MultipartFile photoFile) throws IOException {
+        Optional<User> optionalUser = userRepository.findById(userId);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            User updatedUser = UserMapper.toEntity(requestDTO);
+            updatedUser.setUserID(userId);
+
+            if (photoFile != null && !photoFile.isEmpty()) {
+                updatedUser.setPhoto(photoFile.getBytes());
+            } else {
+                updatedUser.setPhoto(user.getPhoto()); // Keep existing photo if not updated
+            }
+
+            userRepository.save(updatedUser);
+            return UserMapper.toDTO(updatedUser);
+        }
+        throw new RuntimeException("User not found");
+    }
+
+    // Delete user
+    public void deleteUser(Integer userId) {
+        userRepository.deleteById(userId);
+    }
+
+    // Fetch photo by user ID
+    public byte[] getPhoto(Integer userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        return user.getPhoto();
+    }
+}

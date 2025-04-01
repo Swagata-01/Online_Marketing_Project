@@ -1,0 +1,7 @@
+package com.cts.exception;
+
+public class PhotoSizeValidationException {
+	public PhotoSizeValidationException(String message) {
+		super(message);
+	}
+}

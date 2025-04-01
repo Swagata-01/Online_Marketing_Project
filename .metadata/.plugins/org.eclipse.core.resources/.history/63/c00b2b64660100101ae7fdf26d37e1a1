@@ -1,0 +1,7 @@
+package com.cts.exception;
+
+public class AgeValidationException {
+	public AgeValidationException(String message) extends RuntimeException{
+		super(message);
+	}
+}
