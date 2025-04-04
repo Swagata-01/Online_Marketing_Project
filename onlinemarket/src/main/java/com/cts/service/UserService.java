@@ -1,6 +1,8 @@
 package com.cts.service;
  
 import java.io.IOException;
+import java.util.Date;
+import java.text.ParseException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -8,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import com.cts.dto.RequestDTO;
+import com.cts.dto.ResetPasswordDTO;
 import com.cts.dto.ResponseDTO;
 import com.cts.dto.SignInRequest;
 import com.cts.dto.SignInResponse;
@@ -32,6 +35,63 @@ public class UserService {
 
     @Autowired
     UserValidationService userValidationService;
+    
+    public User getUserDetailsById(int userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException("User not found with ID: " + userId));
+        return user;
+    }
+
+    public User updateUserDetails(
+            int userId, 
+            String firstName, 
+            String lastName, 
+            String email, 
+            String password, 
+            byte[] photo, 
+            String nickName, 
+            String address, 
+            String contactNumber, 
+            Date dateOfBirth, 
+            Boolean isActive
+        ) throws IOException, ParseException {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException("User not found with ID: " + userId));
+
+        if (firstName != null && !firstName.isEmpty()) {
+            user.setFirstName(firstName);
+        }
+        if (lastName != null && !lastName.isEmpty()) {
+            user.setLastName(lastName);
+        }
+        if (email != null && !email.isEmpty()) {
+            user.setEmail(email);
+        }
+        if (password != null && !password.isEmpty()) {
+            user.setPassword(PasswordUtil.hashPassword(password));
+        }
+        if (photo != null) {
+            user.setPhoto(photo);
+        }
+        if (nickName != null && !nickName.isEmpty()) {
+            user.setNickName(nickName);
+        }
+        if (address != null && !address.isEmpty()) {
+            user.setAddress(address);
+        }
+        if (contactNumber != null && !contactNumber.isEmpty()) {
+            user.setContactNumber(contactNumber);
+        }
+        if (dateOfBirth != null) {
+            user.setDateOfBirth(dateOfBirth);
+        }
+        if (isActive != null) {
+            user.setActive(isActive);
+        }
+        return userRepository.save(user);
+    }
+
+    
  
     public ResponseDTO createUser(RequestDTO requestDTO,MultipartFile imageFile) throws IOException {
      
@@ -72,6 +132,39 @@ public class UserService {
 
         // If validation succeeds
         return new SignInResponse("Login successful", true);
+    }
+    
+ // Method to reset password
+    public String resetPassword(ResetPasswordDTO dto) {
+        User user = userRepository.findByEmail(dto.getEmail());
+        if (user == null) {
+            return "User not found!";
+        }
+ 
+        if (!dto.getNewPassword().equals(dto.getConfirmPassword())) {
+            return "Passwords do not match!";
+        }
+ 
+        user.setPassword(PasswordUtil.hashPassword(dto.getNewPassword()));
+        userRepository.save(user);
+ 
+        return "Password updated successfully!";
+    }
+ 
+// Verify Email and Activate User
+    public String verifyEmail(String email)
+    {
+        User user = userRepository.findByEmail(email);
+        if (user == null)
+        {
+            return "User not found!";
+        }
+ 
+        user.setEmailVerification(true);
+        user.setActive(true);
+        userRepository.save(user);
+ 
+        return "Email verified successfully! Account is now active.";
     }
 
 }

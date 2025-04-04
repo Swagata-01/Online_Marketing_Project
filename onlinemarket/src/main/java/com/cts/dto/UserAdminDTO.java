@@ -2,7 +2,7 @@ package com.cts.dto;
 
 import java.util.Date;
 
-//import com.cts.enums.UserRole;
+import com.cts.enums.UserRole;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class RequestDTO {
+public class UserAdminDTO {
     @NotBlank(message = "First name is required")
     private String firstName;
 
@@ -25,12 +25,11 @@ public class RequestDTO {
     @NotBlank(message = "Email is required")
     private String email;
 
-    @NotBlank(message = "Password is required")
-    private String password;
+    private String password = "Abc@123";
 
     @NotBlank(message= "Photo is required")
     private byte[] photo;
-    
+
     @NotBlank(message = "Nickname is required")
     private String nickName;
 
@@ -39,9 +38,16 @@ public class RequestDTO {
 
     @NotBlank(message = "Contact number is required")
     private String contactNumber;
-    
-    @NotNull(message="Date of Birth is required")
+
+    @NotNull(message = "Date of Birth is required")
     private Date dateOfBirth;
 
-}
+    private boolean isAdmin; 
+    
+    @NotBlank(message="User role is required")
+    private UserRole userRole;
 
+    public void setUserRoleBasedOnAdminFlag() {
+        this.userRole = isAdmin ? UserRole.ADMIN : UserRole.USER;
+    }
+}

@@ -6,7 +6,10 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.cts.dto.ProductDTO;
+import com.cts.entity.ProductSubscription;
 import com.cts.entity.Products;
+import com.cts.entity.ReviewsAndRatings;
+import com.cts.exception.InvalidProductException;
 
 public interface ProductService {
 	public List<ProductDTO> viewAllProducts();
@@ -18,5 +21,19 @@ public interface ProductService {
 	public void removeProduct(int id);
 
 	public byte[] getProductImage(int id);
+
+	 public Products addSubscription(int userId,int productId);
+
+	 public Products removeSubscription(int userId,int productId);
+
+	 public List<ProductSubscription> getSubscriptionList(int productId);
+
+	 public List<ProductDTO> getProductSubscriptionList(int userId);
+	
+	//public List<ProductSubscription> getSubscriptionsByEmail(String email);
+
+	public Products updateProduct (int productId, String name, String description, MultipartFile productImage) throws InvalidProductException, IOException;
+
+	//public List<ReviewsAndRatings> getReviewsByEmail(String email);
 	
 }

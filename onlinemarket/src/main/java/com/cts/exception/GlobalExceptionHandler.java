@@ -57,6 +57,12 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleInvalidEmailFormatException(EmailNotVerifiedException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
     }
+    
+    //Handles Invalid Product exceptions for subscriptions
+    @ExceptionHandler(InvalidProductException.class)
+    public ResponseEntity<String> handleInvalidProductException(InvalidProductException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    }
 
     // Handles all other exceptions
     @ExceptionHandler(Exception.class)

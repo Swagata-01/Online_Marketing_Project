@@ -4,19 +4,24 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.List;
 
 import com.cts.enums.UserRole;
 import com.cts.exception.AgeValidationException;
 import com.cts.exception.PhotoSizeValidationException;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
@@ -90,27 +95,13 @@ public class User {
     @Builder.Default
     private LocalDateTime updatedOn=LocalDateTime.now();
     
-    @PrePersist
-    @PreUpdate
-    private void validate() {
-        validateAge();
-        validatePhotoSize();
-    }
     
-    private void validateAge() {
-        LocalDate birthDate = dateOfBirth.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        int age = LocalDate.now().getYear() - birthDate.getYear();
-        if (age < 18) {
-            throw new AgeValidationException("User must be at least 18 years old.");
-        }
-    }
-    
-    private void validatePhotoSize() {
-        if (photo != null) {
-            int photoSize = photo.length / 1024;
-            if (photoSize < 10 || photoSize > 20) {
-                throw new PhotoSizeValidationException("Photo size must be between 10KB and 20KB.");
-            }
-        }
-    }
+    @OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL, mappedBy="user")
+    @JsonManagedReference
+    private List<ProductSubscription> productSubscriptionList;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<ReviewsAndRatings> reviewAndRating;
+   
 }
