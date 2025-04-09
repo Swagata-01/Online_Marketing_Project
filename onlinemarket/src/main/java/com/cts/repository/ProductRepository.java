@@ -28,5 +28,9 @@ public interface ProductRepository extends JpaRepository<Products, Integer> {
 	
 	@Query("SELECT subscription FROM ProductSubscription subscription WHERE subscription.subscriptionId = :subscriptionId")
     Optional<ProductSubscription> findSubscriptionById(@Param("subscriptionId") int subscriptionId);
+
+	Optional<Products> findByName(String name);
+
+	//Optional<Products> findByNameContainingIgnoreCase(String name);
 	
 }

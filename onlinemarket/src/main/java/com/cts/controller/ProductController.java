@@ -86,16 +86,16 @@ public class ProductController {
 				.body(image);
 	}
 	
-	@PutMapping("/admin/updateProduct/{productId}")
+	@PutMapping("/admin/updateProduct/{name}")
     public ResponseEntity<Products> updateProduct(
-            @PathVariable int productId,
-            @RequestParam(required=false)  String name,
+            @PathVariable String name,
             @RequestParam (required=false) String description,
             @RequestParam (required=false) MultipartFile productImage) throws Exception
             
     {
-        return ResponseEntity.ok(productService.updateProduct(productId, name, description, productImage));
+        return ResponseEntity.ok(productService.updateProduct(name, description, productImage));
     }
+	
 	
 	@PostMapping("/addSubscription")
     public ResponseEntity<Products> addSubscription(@RequestParam int userId,@RequestParam int productId){

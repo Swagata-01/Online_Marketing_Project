@@ -24,11 +24,10 @@ public class ReviewAndRatingController {
         @RequestParam int productId,
         @RequestParam int userId,
         @RequestParam double rating,
-        @RequestParam String review,
-        @RequestParam boolean reviewActiveStatus
+        @RequestParam String review
     ) {
         try {
-            ReviewsAndRatings savedReview = reviewService.createReview(productId, userId, rating, review,reviewActiveStatus);
+            ReviewsAndRatings savedReview = reviewService.createReview(productId, userId, rating, review);
             return ResponseEntity.status(201).body(savedReview);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(null);
@@ -40,12 +39,12 @@ public class ReviewAndRatingController {
     public ResponseEntity<ReviewsAndRatings> updateReview(
         @PathVariable Long ratingId,
         @RequestParam(required = false) double rating,
-        @RequestParam(required = false) String review,
-        @RequestParam(required = false) boolean reviewActiveStatus
+        @RequestParam(required = false) String review
+        
         
     ) {
         try {
-            ReviewsAndRatings updatedReview = reviewService.updateReview(ratingId, rating, review, reviewActiveStatus);
+            ReviewsAndRatings updatedReview = reviewService.updateReview(ratingId, rating, review);
             return ResponseEntity.ok(updatedReview);
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
@@ -61,14 +60,14 @@ public class ReviewAndRatingController {
         return ResponseEntity.ok(reviews);
     }
     
-//    @GetMapping("/user/{userId}")
-//    public ResponseEntity<List<ReviewAndRatingDTO>> getUserReviews(@PathVariable int userId) {
-//        try {
-//            List<ReviewAndRatingDTO> userReviews = reviewService.getUserReviews(userId);
-//            return ResponseEntity.ok(userReviews);
-//        } catch (InvalidInputException e) {
-//            return ResponseEntity.badRequest().body(null);
-//        }
-//    }
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<ReviewAndRatingDTO>> getUserReviews(@PathVariable int userId) {
+        try {
+            List<ReviewAndRatingDTO> userReviews = reviewService.getReviewsByUserId(userId);
+            return ResponseEntity.ok(userReviews);
+        } catch (InvalidInputException e) {
+            return ResponseEntity.badRequest().body(null);
+        }
+    }
     
 }
