@@ -23,7 +23,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "product_and_subscription", uniqueConstraints = @UniqueConstraint(columnNames = {"userId", "productId"}))
+@Table(name = "productsubscriptions", uniqueConstraints = @UniqueConstraint(columnNames = {"userId", "productId"}))
 public class ProductSubscription {
     
     @Id
@@ -42,12 +42,12 @@ public class ProductSubscription {
     private LocalDateTime updatedOn = LocalDateTime.now();
 
     @ManyToOne(fetch=FetchType.EAGER)
-    @JoinColumn(name="userId", referencedColumnName = "userid")
+    @JoinColumn(name="userid", referencedColumnName = "userid")
     @JsonBackReference
     private User user;
     
     @ManyToOne(fetch=FetchType.EAGER)
-    @JoinColumn(name="productId")
+    @JoinColumn(name="productid")
     @JsonBackReference
     private Products products;
     
