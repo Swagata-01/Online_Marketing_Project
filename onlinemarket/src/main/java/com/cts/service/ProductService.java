@@ -30,10 +30,8 @@ public interface ProductService {
 
 	 public List<ProductDTO> getProductSubscriptionList(int userId);
 	
-	//public List<ProductSubscription> getSubscriptionsByEmail(String email);
 
-	public Products updateProduct (int productId, String name, String description, MultipartFile productImage) throws InvalidProductException, IOException;
+	public Products updateProduct (String name, String description, MultipartFile productImage) throws InvalidProductException, IOException;
 
-	//public List<ReviewsAndRatings> getReviewsByEmail(String email);
 	
 }

@@ -59,17 +59,17 @@ public class ProductServiceImpl implements ProductService {
         product.setImages(imageFile.getBytes());
         return productRepository.save(product);
     }
+   
     
     @Override
-    public Products updateProduct(int productId, String name, String description, MultipartFile productImage) throws  InvalidProductException, IOException {
-        Products product = productRepository.findById(productId).orElseThrow(() -> new InvalidProductException("Product not found with ID: " + productId));
-        if (name != null)product.setName(name);
+    public Products updateProduct(String name, String description, MultipartFile productImage) throws  InvalidProductException, IOException {
+        Products product = productRepository.findByName(name).orElseThrow(() -> new InvalidProductException("Product not found with Name: " + name));
         if (description != null)product.setDescription(description);
         if (productImage != null)product.setImages(productImage.getBytes());
-
+ 
         return productRepository.save(product);
-       
 
+ 
     }
 
     @Override

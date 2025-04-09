@@ -148,7 +148,7 @@ public class UserValidationService {
     private void validatePhotoSize(byte[] photo) {
         if (photo != null) {
             int photoSize = photo.length / 1024; 
-            if (photoSize < 10 || photoSize > 20) {
+            if (photoSize < 10 || photoSize > 50) {
                 throw new PhotoSizeValidationException("Photo size must be between 10KB and 20KB.");
             }
         }
