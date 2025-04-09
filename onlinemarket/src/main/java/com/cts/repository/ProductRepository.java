@@ -29,4 +29,9 @@ public interface ProductRepository extends JpaRepository<Products, Integer> {
 	@Query("SELECT subscription FROM ProductSubscription subscription WHERE subscription.subscriptionId = :subscriptionId")
     Optional<ProductSubscription> findSubscriptionById(@Param("subscriptionId") int subscriptionId);
 	
+	@Query(value = "SELECT * FROM product_subscription_and_ratings_view WHERE " +
+            "(:name IS NULL OR LOWER(name) LIKE LOWER(CONCAT('%',:name,'%'))) AND " +
+            "(:count IS NULL OR subscription_count >= :count) AND " +
+            "(:rating IS NULL OR avg_rating >= :rating)", nativeQuery=true)
+	List<Products> searchProductByNameSubsRating(String name, int count, double rating);
 }
