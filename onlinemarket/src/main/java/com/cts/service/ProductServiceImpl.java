@@ -85,16 +85,9 @@ public class ProductServiceImpl implements ProductService {
 
     }
  
-    @Override
-
-    public void removeProduct(int id) {
-
-        productRepository.deleteById(id);
-
-    }
+    
  
     @Override
-
     public Products addProduct(String name, String description, MultipartFile imageFile) throws IOException {
 
         Products product = new Products();

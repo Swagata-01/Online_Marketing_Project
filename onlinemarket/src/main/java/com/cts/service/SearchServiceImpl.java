@@ -68,4 +68,17 @@ public class SearchServiceImpl implements SearchService {
 		return productDTOs;
 	}
 
+	@Override
+	public List<ProductDTO> searchProductByNameSubsRating(String name, int count, double rating) {
+		// TODO Auto-generated method stub
+		List<Products> products = productRepository.searchProductByNameSubsRating(name, count, rating);
+		
+		List<ProductDTO> productDTOs = new ArrayList<>();
+	    
+	    for (Products product : products) {
+	        productDTOs.add(new ProductDTO(product));
+	    }
+		return productDTOs;
+	}
+
 }

@@ -32,10 +32,10 @@ public class Products {
     @Column(name="productid")
     private int productid;
     
-    @Column
+    @Column(name="name")
     private String name;
     
-    @Column
+    @Column(name="description")
     private String description;
     
     @Lob

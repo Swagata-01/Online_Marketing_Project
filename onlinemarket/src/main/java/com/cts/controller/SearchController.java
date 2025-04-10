@@ -45,4 +45,10 @@ public class SearchController {
 		return ResponseEntity.ok(products);
 	}
 	
+	@GetMapping("/searchProductByNameSubsRating")
+	public ResponseEntity<List<ProductDTO>> searchProduct(@RequestParam String name, @RequestParam int count, @RequestParam double rating){
+		List<ProductDTO> products = searchService.searchProductByNameSubsRating(name, count, rating);
+		return ResponseEntity.ok(products);
+	}
+	
 }

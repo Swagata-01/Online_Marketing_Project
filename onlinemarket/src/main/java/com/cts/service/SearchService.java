@@ -12,4 +12,6 @@ public interface SearchService {
 	public List<ProductDTO> searchProductByRating(double rating);
 
 	public List<ProductDTO> searchProductBySubsCountAndRating(int count, double rating);
+	
+	public List<ProductDTO> searchProductByNameSubsRating(String name, int count, double rating);
 }

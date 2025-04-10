@@ -67,15 +67,6 @@ public class ReviewAndRatingService {
         return reviewRepository.save(existingReview);
     }
 
-//    // Delete Review
-//    public void deleteReview(Long ratingId) {
-//        ReviewsAndRatings currentReview = reviewRepository.findById(ratingId)
-//                .orElseThrow(() -> new RuntimeException("Rating not found with ID: " + ratingId));
-//
-//        reviewRepository.delete(currentReview);
-//    }
-
-    // Get All Reviews
     public List<ReviewAndRatingDTO> getAllReviews() {
     	return reviewRepository.findAll().stream()
     	        .filter(review -> review.isReviewActiveStatus())
@@ -88,28 +79,10 @@ public class ReviewAndRatingService {
             reviewDTO.setReview(review.getReview());
             reviewDTO.setReviewCreatedOn(review.getReviewCreatedOn());
             reviewDTO.setReviewUpdateOn(review.getReviewUpdateOn());
-            reviewDTO.setReviewDeletedOn(review.getReviewDeletedOn());
+            //reviewDTO.setReviewDeletedOn(review.getReviewDeletedOn());
             return reviewDTO;
         }).collect(Collectors.toList());
     }
-    
-//    public List<ReviewAndRatingDTO> getUserReviews(int userId) throws InvalidInputException {
-//        if (!userRepository.existsById(userId)) {
-//            throw new InvalidInputException("User not found with ID: " + userId);
-//        }
-//        return reviewRepository.findByUserId(userId).stream()
-//                .filter(review -> review.isReviewActiveStatus())
-//                .map(review -> {
-//                    ReviewAndRatingDTO reviewDTO = new ReviewAndRatingDTO();
-//                    reviewDTO.setRatingId(review.getRatingId());
-//                    reviewDTO.setProducts(review.getProducts());
-//                    reviewDTO.setUser(review.getUser());
-//                    reviewDTO.setRating(review.getRating());
-//                    reviewDTO.setReview(review.getReview());
-//                    reviewDTO.setReviewCreatedOn(review.getReviewCreatedOn());
-//                    reviewDTO.setReviewUpdateOn(review.getReviewUpdateOn());
-//                    return reviewDTO;
-//                }).collect(Collectors.toList());
-//    }
+
     
 }
