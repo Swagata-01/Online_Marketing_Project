@@ -46,6 +46,6 @@ public class ReviewsAndRatings {
     @Column(name = "updatedon")
     private Timestamp reviewUpdateOn;
     
-    private Timestamp reviewDeletedOn;
+    //private Timestamp reviewDeletedOn;
 
 }

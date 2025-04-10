@@ -69,14 +69,6 @@ public class ProductController {
 	}
 	
 	
-	//API call for removing specific product using Product id
-	@DeleteMapping("/admin/removeProduct/{productId}")
-	public String removeProduct(@PathVariable int productId) {
-		productService.removeProduct(productId);
-		return "Product deleted successfully";
-	}
-	
-	
 	//API call for fetching image of specific product using id
 	@GetMapping("product/image/{id}")
 	public ResponseEntity<byte[]> getImage(@PathVariable int id){

@@ -17,8 +17,7 @@ public interface ProductService {
 	public Products viewProductById(int id);
 	
 	public Products addProduct(String name, String description, MultipartFile imageFile) throws IOException;
-	
-	public void removeProduct(int id);
+
 
 	public byte[] getProductImage(int id);
 
