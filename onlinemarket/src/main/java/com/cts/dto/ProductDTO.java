@@ -4,10 +4,18 @@ package com.cts.dto;
 
 import com.cts.entity.Products;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+@Builder
 public class ProductDTO {
 	private int productid;
 	private String name;
@@ -21,6 +29,6 @@ public class ProductDTO {
 		this.description = product.getDescription();
 		
 		//Assigning image URL for retrieving specific data
-		this.imageUrl = "/api/auth/product/image/" + product.getProductid();
+		this.imageUrl = "OMP/product/image/" + product.getProductid();
 	}
 }
