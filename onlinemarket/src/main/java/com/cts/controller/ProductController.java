@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.cts.dto.ProductDTO;
+import com.cts.dto.ProductRatingSubscriptionDTO;
 import com.cts.entity.Products;
 import com.cts.entity.ReviewsAndRatings;
 import com.cts.exception.UserNotFoundException;
@@ -111,6 +112,17 @@ public class ProductController {
     @GetMapping("/viewSubscriptionList")
     public ResponseEntity<List<ProductSubscription>> getSubscriptionList(@RequestParam int productId) {
         return ResponseEntity.ok(productServiceImpl.getSubscriptionList(productId));
+    }
+    
+    @GetMapping("/topSubscribedProduct")
+    public ResponseEntity<List<ProductRatingSubscriptionDTO>> findTopSubscribedProduct(){
+    	return ResponseEntity.ok(productServiceImpl.findTopSubscribedProduct());
+    }
+    
+    @GetMapping("/topRatedProducts")
+    public ResponseEntity<List<ProductRatingSubscriptionDTO>> findTopRatedProducts() {
+        List<ProductRatingSubscriptionDTO> topRatedProducts = productService.findTopRatedProducts();
+        return ResponseEntity.ok(topRatedProducts);
     }
 
 }

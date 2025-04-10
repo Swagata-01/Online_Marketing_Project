@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.cts.dto.ProductDTO;
+import com.cts.dto.ProductRatingSubscriptionDTO;
 import com.cts.entity.ProductSubscription;
 import com.cts.entity.Products;
 import com.cts.entity.ReviewsAndRatings;
@@ -35,5 +36,9 @@ public interface ProductService {
 	public Products updateProduct (int productId, String name, String description, MultipartFile productImage) throws InvalidProductException, IOException;
 
 	//public List<ReviewsAndRatings> getReviewsByEmail(String email);
+	
+	public List<ProductRatingSubscriptionDTO> findTopSubscribedProduct();
+	
+	public List<ProductRatingSubscriptionDTO> findTopRatedProducts();
 	
 }

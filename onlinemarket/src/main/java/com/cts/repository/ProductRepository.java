@@ -29,4 +29,10 @@ public interface ProductRepository extends JpaRepository<Products, Integer> {
 	@Query("SELECT subscription FROM ProductSubscription subscription WHERE subscription.subscriptionId = :subscriptionId")
     Optional<ProductSubscription> findSubscriptionById(@Param("subscriptionId") int subscriptionId);
 	
+	@Query(value="SELECT product_id FROM product_and_subscription WHERE optin = 1 "
+			+ "GROUP BY product_id "
+			+ "ORDER BY COUNT(*)"
+			+ "DESC LIMIT 2",nativeQuery=true)
+	List<Integer> findTopSubscribedProduct();
+	
 }

@@ -18,7 +18,7 @@ public class ReviewAndRatingController {
     @Autowired
     private ReviewAndRatingService reviewService;
 
-    // Create Review (All parameters as RequestParam)
+    // Create Review (All parameters as RequestParam)//reviewActiveStatus modify as user should not assign that
     @PostMapping("/createReview")
     public ResponseEntity<ReviewsAndRatings> createReview(
         @RequestParam int productId,
@@ -35,7 +35,7 @@ public class ReviewAndRatingController {
         }
     }
 
-    // Update Review
+    // Update Review // Modify if user don't want to update rating but review only
     @PutMapping("/updateReview/{ratingId}")
     public ResponseEntity<ReviewsAndRatings> updateReview(
         @PathVariable Long ratingId,
@@ -60,6 +60,8 @@ public class ReviewAndRatingController {
         }
         return ResponseEntity.ok(reviews);
     }
+    
+    //Add reviews based on user ID
     
 //    @GetMapping("/user/{userId}")
 //    public ResponseEntity<List<ReviewAndRatingDTO>> getUserReviews(@PathVariable int userId) {
