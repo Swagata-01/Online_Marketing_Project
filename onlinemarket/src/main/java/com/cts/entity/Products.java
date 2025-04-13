@@ -13,6 +13,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
+
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.*;
@@ -25,7 +27,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name="products")
+@Table(name="products", uniqueConstraints = @UniqueConstraint(columnNames = {"name"}))
 public class Products {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

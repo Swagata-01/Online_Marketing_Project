@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import com.cts.entity.ReviewsAndRatings;
+import com.cts.entity.User;
 
 public interface ReviewAndRatingRepository extends JpaRepository<ReviewsAndRatings, Long> {
 //	List<ReviewsAndRatings> findByUserId(int userId);
@@ -17,4 +18,6 @@ public interface ReviewAndRatingRepository extends JpaRepository<ReviewsAndRatin
             "ORDER BY max_rating DESC " +
             "LIMIT 2", nativeQuery = true)
 	List<Object[]> findTopRatedProducts();
+	
+	List<ReviewsAndRatings> findByUser(User user);
 }

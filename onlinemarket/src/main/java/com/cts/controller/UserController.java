@@ -33,7 +33,7 @@ import com.cts.service.UserService;
 @RestController
 
 @RequestMapping("/OMP")
- @CrossOrigin(origins="http://127.0.0.1:3000")
+@CrossOrigin(origins = "http://localhost:4200") 
 
 public class UserController {
     @Autowired

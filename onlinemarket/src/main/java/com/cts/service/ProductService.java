@@ -32,7 +32,7 @@ public interface ProductService {
 	
 	//public List<ProductSubscription> getSubscriptionsByEmail(String email);
 
-	public Products updateProduct (int productId, String name, String description, MultipartFile productImage) throws InvalidProductException, IOException;
+	public Products updateProduct (String name, String upName, String description, MultipartFile imageFile) throws InvalidProductException, IOException;
 
 	//public List<ReviewsAndRatings> getReviewsByEmail(String email);
 	

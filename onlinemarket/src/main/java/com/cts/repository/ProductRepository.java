@@ -42,4 +42,7 @@ public interface ProductRepository extends JpaRepository<Products, Integer> {
 			+ "DESC LIMIT 2",nativeQuery=true)
 	List<Integer> findTopSubscribedProduct();
 	
+	
+	Optional<Products> findByName(String name);
+	
 }
