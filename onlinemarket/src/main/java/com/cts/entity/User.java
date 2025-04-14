@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import com.cts.enums.UserRole;
 import com.cts.exception.AgeValidationException;
@@ -59,6 +60,16 @@ public class User {
     private String nickName;
     
  //   @Column(nullable = false)
+    @Column(name="addressline1")
+    private String addressLine1;
+    
+    @Column(name="addressline2")
+    private String addressLine2;
+    
+    @Column(name="postalcode")
+    private int postalCode;
+    
+    @Column(name="address")
     private String address;
     
     @Column(name="contactnumber")
@@ -103,5 +114,7 @@ public class User {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<ReviewsAndRatings> reviewAndRating;
+
+
    
 }

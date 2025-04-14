@@ -1,45 +1,56 @@
 package com.cts.mapper;
 
-import com.cts.entity.User;
-
 import org.springframework.stereotype.Component;
 
 import com.cts.dto.RequestDTO;
 import com.cts.dto.ResponseDTO;
+import com.cts.entity.User;
 
 @Component
 public class UserMapper {
-    public static User toEntity(RequestDTO requestDTO) {
+
+    // Converts RequestDTO to User Entity
+    public User toEntity(RequestDTO requestDTO) {
         if (requestDTO == null) {
             return null;
         }
- 
+
+        // Dynamically constructing the address
+        String address = String.format("%s, %s, %s",
+                requestDTO.getAddressLine1(),
+                requestDTO.getAddressLine2(),
+                requestDTO.getPostalCode());
+
         return User.builder()
                 .firstName(requestDTO.getFirstName())
                 .lastName(requestDTO.getLastName())
                 .email(requestDTO.getEmail())
                 .password(requestDTO.getPassword())
                 .nickName(requestDTO.getNickName())
-                .address(requestDTO.getAddress())
+                .addressLine1(requestDTO.getAddressLine1())
+                .addressLine2(requestDTO.getAddressLine2())
+                .postalCode(requestDTO.getPostalCode())
+                .address(address)
                 .contactNumber(requestDTO.getContactNumber())
                 .dateOfBirth(requestDTO.getDateOfBirth())
+                .photo(requestDTO.getPhoto())
                 .build();
-
     }
- 
-    public static ResponseDTO toDTO(User user) {
+
+    // Converts User Entity to ResponseDTO
+    public ResponseDTO toDTO(User user) {
         if (user == null) {
             return null;
         }
- 
+
         return ResponseDTO.builder()
                 .userID(user.getUserID())
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
                 .email(user.getEmail())
                 .nickName(user.getNickName())
-                .address(user.getAddress())
-                .photo("http://localhost:8090/OMP/user/image/" + user.getUserID())
+                .address(user.getAddress()) // Pre-constructed address stored in the database
+                .photo("http://localhost:8090/OMP/user/image/" + user.getUserID()) // Exposing image URL
                 .contactNumber(user.getContactNumber())
                 .dateOfBirth(user.getDateOfBirth())
                 .userRole(user.getUserRole())
@@ -48,8 +59,5 @@ public class UserMapper {
                 .createdOn(user.getAddedOn())
                 .updatedOn(user.getUpdatedOn())
                 .build();
-
     }
-
 }
- 

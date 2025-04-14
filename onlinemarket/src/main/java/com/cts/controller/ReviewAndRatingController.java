@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/OMP/reviews")
+@CrossOrigin(origins="http://127.0.0.1:3000")
 public class ReviewAndRatingController {
 
     @Autowired

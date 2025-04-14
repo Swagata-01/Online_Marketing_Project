@@ -29,7 +29,7 @@ import com.cts.entity.ProductSubscription;
 import com.cts.service.ProductService;
 
 @RestController
-//@CrossOrigin(origins = "http://127.0.0.1:4200")
+@CrossOrigin(origins = "http://127.0.0.1:4200")
 @RequestMapping("/OMP")
 public class ProductController {
 
