@@ -27,7 +27,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name="products", uniqueConstraints = @UniqueConstraint(columnNames = {"name"}))
+@Table(name="products")
 public class Products {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

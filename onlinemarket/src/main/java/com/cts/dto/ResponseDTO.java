@@ -23,6 +23,7 @@ public class ResponseDTO {
     private String address;
     private String contactNumber;
     private Date dateOfBirth;
+    private String photo;
     private UserRole userRole;
     private boolean emailVerification;
     private boolean isActive;

@@ -8,9 +8,11 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.cts.dto.ProductDTO;
+import com.cts.dto.ProductRatingSubscriptionDTO;
 import com.cts.dto.RequestDTO;
 import com.cts.dto.ResetPasswordDTO;
 import com.cts.dto.ResponseDTO;
@@ -33,7 +36,7 @@ import com.cts.service.UserService;
 @RestController
 
 @RequestMapping("/OMP")
-@CrossOrigin(origins = "http://localhost:4200") 
+//@CrossOrigin(origins="http://127.0.0.1:3000")
 
 public class UserController {
     @Autowired
@@ -75,10 +78,23 @@ public ResponseDTO createUser(
         return userService.getAllUsers();
     }
     
+    @GetMapping("/getUserIdByEmail")
+    public Integer getUserIdByEmail(@RequestParam String emailId) {
+    	return userService.getUserIdByEmail(emailId);
+    }
+    
+    @GetMapping("user/image/{userId}")
+	public ResponseEntity<byte[]> getImage(@PathVariable int userId){
+		byte[] image = userService.getUserImage(userId);
+		return ResponseEntity.ok()
+				.contentType(MediaType.IMAGE_PNG)
+				.body(image);
+	}
+	
     @GetMapping("/myDetails")
-    public ResponseEntity<User> getUserDetailsById(@RequestParam int userId) {
+    public ResponseEntity<ResponseDTO> getUserDetailsById(@RequestParam int userId) {
         try {
-            User user = userService.getUserDetailsById(userId);
+            ResponseDTO user = userService.getUserDetailsById(userId);
             return ResponseEntity.ok(user);
         } catch (UserNotFoundException e) {
             return ResponseEntity.status(404).body(null);
