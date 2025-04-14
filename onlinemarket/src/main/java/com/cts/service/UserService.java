@@ -14,6 +14,7 @@ import com.cts.dto.ResetPasswordDTO;
 import com.cts.dto.ResponseDTO;
 import com.cts.dto.SignInRequest;
 import com.cts.dto.SignInResponse;
+import com.cts.entity.Products;
 import com.cts.entity.User;
 import com.cts.exception.InvalidCredentialsException;
 import com.cts.exception.EmailNotVerifiedException;
@@ -36,12 +37,29 @@ public class UserService {
     @Autowired
     UserValidationService userValidationService;
     
-    public User getUserDetailsById(int userId) {
+    @Autowired
+    private UserMapper userMapper;
+    
+    public ResponseDTO getUserDetailsById(int userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException("User not found with ID: " + userId));
-        return user;
+        ResponseDTO userDTO = userMapper.toDTO(user);
+        return userDTO;
     }
 
+    public Integer getUserIdByEmail(String emailId) {
+    	User user = userRepository.findByEmail(emailId);
+    	return user.getUserID();
+    }
+    
+    public byte[] getUserImage(int id) {
+
+        User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("Product not found"));
+
+        return user.getPhoto();
+
+    }
+    
     public User updateUserDetails(
             int userId, 
             String firstName, 
@@ -131,7 +149,7 @@ public class UserService {
         }
 
         // If validation succeeds
-        return new SignInResponse("Login successful", true);
+        return new SignInResponse("Login Successfull",true,user.getEmail());
     }
     
  // Method to reset password

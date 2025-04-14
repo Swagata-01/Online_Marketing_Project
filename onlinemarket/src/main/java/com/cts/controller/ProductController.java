@@ -29,7 +29,7 @@ import com.cts.entity.ProductSubscription;
 import com.cts.service.ProductService;
 
 @RestController
-@CrossOrigin(origins = "http://127.0.0.1:3000")
+//@CrossOrigin(origins = "http://127.0.0.1:4200")
 @RequestMapping("/OMP")
 public class ProductController {
 
@@ -79,16 +79,27 @@ public class ProductController {
 				.body(image);
 	}
 	
-	@PutMapping("/admin/updateProduct/{productId}")
+//	@PutMapping("/admin/updateProduct/{productId}")
+//    public ResponseEntity<Products> updateProduct(
+//            @PathVariable int productId,
+//            @RequestParam(required=false)  String name,
+//            @RequestParam (required=false) String description,
+//            @RequestParam (required=false) MultipartFile productImage) throws Exception
+//            
+//    {
+//        return ResponseEntity.ok(productService.updateProduct(productId, name, description, productImage));
+//    }
+	@PutMapping("/updateProduct/{name}")
     public ResponseEntity<Products> updateProduct(
-            @PathVariable int productId,
-            @RequestParam(required=false)  String name,
+            @PathVariable String name,
+            @RequestParam(required=false)  String upName,
             @RequestParam (required=false) String description,
-            @RequestParam (required=false) MultipartFile productImage) throws Exception
+            @RequestParam (required=false) MultipartFile imageFile) throws Exception
             
     {
-        return ResponseEntity.ok(productService.updateProduct(productId, name, description, productImage));
+        return ResponseEntity.ok(productService.updateProduct(name, upName, description, imageFile));
     }
+	
 	
 	@PostMapping("/addSubscription")
     public ResponseEntity<Products> addSubscription(@RequestParam int userId,@RequestParam int productId){

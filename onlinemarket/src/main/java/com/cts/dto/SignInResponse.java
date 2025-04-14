@@ -10,4 +10,5 @@ import lombok.*;
 public class SignInResponse {
     private String message;
     private boolean success;
+    private String email;
 }

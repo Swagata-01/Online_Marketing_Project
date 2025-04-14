@@ -3,7 +3,8 @@ package com.cts.service;
 import com.cts.dto.ProductRatingSubscriptionDTO;
  
 import java.io.IOException;
-
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.time.LocalDateTime;
 
 import java.util.ArrayList;
@@ -102,22 +103,22 @@ public class ProductServiceImpl implements ProductService {
 
     }
 
-    @Override
-
-    public Products updateProduct(int productId, String name, String description, MultipartFile productImage) throws  InvalidProductException, IOException {
-
-        Products product = productRepository.findById(productId).orElseThrow(() -> new InvalidProductException("Product not found with ID: " + productId));
-
-        if (name != null)product.setName(name);
-
-        if (description != null)product.setDescription(description);
-
-        if (productImage != null)product.setImages(productImage.getBytes());
- 
-        return productRepository.save(product);
-
- 
-    }
+//    @Override
+//
+//    public Products updateProduct(int productId, String name, String description, MultipartFile productImage) throws  InvalidProductException, IOException {
+//
+//        Products product = productRepository.findById(productId).orElseThrow(() -> new InvalidProductException("Product not found with ID: " + productId));
+//
+//        if (name != null)product.setName(name);
+//
+//        if (description != null)product.setDescription(description);
+//
+//        if (productImage != null)product.setImages(productImage.getBytes());
+// 
+//        return productRepository.save(product);
+//
+// 
+//    }
  
     @Override
 
@@ -309,6 +310,18 @@ public class ProductServiceImpl implements ProductService {
  
         return topRatedProducts;
 
+    }
+    
+    public Products updateProduct(String name, String upName, String description, MultipartFile imageFile) throws  InvalidInputException, IOException {
+        Products product = productRepository.findByName(name).orElseThrow(() -> new InvalidInputException("Product not found with Name: " + name));
+        if (upName != null)product.setName(upName);
+        if (description != null)product.setDescription(description);
+        if (imageFile != null)product.setImages(imageFile.getBytes());
+       
+ 
+        return productRepository.save(product);
+       
+ 
     }
 
     }

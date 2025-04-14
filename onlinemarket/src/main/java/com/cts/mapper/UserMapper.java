@@ -1,8 +1,13 @@
 package com.cts.mapper;
 
 import com.cts.entity.User;
+
+import org.springframework.stereotype.Component;
+
 import com.cts.dto.RequestDTO;
 import com.cts.dto.ResponseDTO;
+
+@Component
 public class UserMapper {
     public static User toEntity(RequestDTO requestDTO) {
         if (requestDTO == null) {
@@ -34,6 +39,7 @@ public class UserMapper {
                 .email(user.getEmail())
                 .nickName(user.getNickName())
                 .address(user.getAddress())
+                .photo("http://localhost:8090/OMP/user/image/" + user.getUserID())
                 .contactNumber(user.getContactNumber())
                 .dateOfBirth(user.getDateOfBirth())
                 .userRole(user.getUserRole())

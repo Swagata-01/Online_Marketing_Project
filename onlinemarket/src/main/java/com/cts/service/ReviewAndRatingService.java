@@ -32,7 +32,7 @@ public class ReviewAndRatingService {
     private UserRepository userRepository;
 
     // Create Review (Updated signature to avoid DTO in controller)
-    public ReviewsAndRatings createReview(int productId, int userId, double rating, String review, boolean reviewActiveStatus) {
+    public ReviewsAndRatings createReview(int productId, int userId, double rating, String review) {
         Products product = productRepository.findById(productId)
                 .orElseThrow(() -> new RuntimeException("Product not found with ID: " + productId));
 
@@ -44,14 +44,14 @@ public class ReviewAndRatingService {
         newReview.setUser(user);
         newReview.setRating(rating);
         newReview.setReview(review);
-        newReview.setReviewActiveStatus(reviewActiveStatus);
+        newReview.setReviewActiveStatus(true);
         newReview.setReviewCreatedOn(Timestamp.from(Instant.now()));
 
         return reviewRepository.save(newReview);
     }
 
     // Update Review
-    public ReviewsAndRatings updateReview(Long ratingId, Double rating, String review, boolean reviewActiveStatus) {
+    public ReviewsAndRatings updateReview(Long ratingId, Double rating, String review) {
         ReviewsAndRatings existingReview = reviewRepository.findById(ratingId)
                 .orElseThrow(() -> new RuntimeException("Rating not found with ID: " + ratingId));
 
@@ -62,7 +62,7 @@ public class ReviewAndRatingService {
         if (review != null) {
             existingReview.setReview(review); 
         }
-        existingReview.setReviewActiveStatus(reviewActiveStatus);
+        existingReview.setReviewActiveStatus(true);
         existingReview.setReviewUpdateOn(Timestamp.from(Instant.now())); 
         return reviewRepository.save(existingReview);
     }
@@ -84,5 +84,12 @@ public class ReviewAndRatingService {
         }).collect(Collectors.toList());
     }
 
-    
+    public List<ReviewAndRatingDTO> getReviewsByUserId(int userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new InvalidInputException("User not found"));
+        List<ReviewsAndRatings> reviews = reviewRepository.findByUser(user);
+        
+        return reviews.stream()
+                      .map(review -> new ReviewAndRatingDTO(review))
+                      .collect(Collectors.toList());
+    }
 }
