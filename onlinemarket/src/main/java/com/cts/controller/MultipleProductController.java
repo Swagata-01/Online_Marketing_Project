@@ -14,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/OMP")
+@CrossOrigin(origins="http://127.0.0.1:3000")
 public class MultipleProductController {
     @Autowired
     private MultipleProductService multipleProductService;

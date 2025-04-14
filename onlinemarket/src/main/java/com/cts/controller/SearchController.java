@@ -14,7 +14,7 @@ import com.cts.dto.ProductDTO;
 import com.cts.service.SearchService;
 
 @RestController
-//@CrossOrigin(origins = "http://127.0.0.1:3000")
+@CrossOrigin(origins = "http://127.0.0.1:3000")
 @RequestMapping("/OMP")
 public class SearchController {
 	
