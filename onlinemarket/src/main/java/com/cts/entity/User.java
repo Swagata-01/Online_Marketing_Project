@@ -58,6 +58,15 @@ public class User {
     @Column(name="nickname")
     private String nickName;
     
+    @Column(name="addressline1")
+    private String addressLine1;
+    
+    @Column(name="addressline2")
+    private String addressLine2;
+    
+    @Column(name="postalcode")
+    private int postalCode;
+    
  //   @Column(nullable = false)
     private String address;
     

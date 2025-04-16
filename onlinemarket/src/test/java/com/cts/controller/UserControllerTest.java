@@ -36,7 +36,7 @@ class UserControllerTest {
     void loginUser_validRequest_shouldReturnOkResponse()
     {
         SignInRequest signInRequest = new SignInRequest("john.doe@example.com", "password123");
-        SignInResponse signInResponse = new SignInResponse("Login successful", true);
+        SignInResponse signInResponse = new SignInResponse("Login successful", true,"john.doe@example.com");
 
         when(userService.validateUser(signInRequest)).thenReturn(signInResponse);
 

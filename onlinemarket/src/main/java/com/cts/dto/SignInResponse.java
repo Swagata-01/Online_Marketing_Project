@@ -4,10 +4,10 @@ import lombok.*;
 
 @Data
 @NoArgsConstructor
-@Getter
-@Setter
 @AllArgsConstructor
 public class SignInResponse {
-    private String message;
+    
+	private String message;
     private boolean success;
+    private String email;
 }
