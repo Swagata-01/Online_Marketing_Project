@@ -1,0 +1,38 @@
+.product-review-container {
+    width: 200px;
+    padding: 25px;
+    background: #f0c9dc;
+    border: 2px solid lightblue;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.product-review-container h3 {
+    background: rgb(219, 130, 219);
+    color: white;
+    padding: 10px;
+    width: 100%;
+    margin: 0;
+    border: 2px solid purple;
+}
+
+.review-card {
+    background: white;
+    padding: 10px;
+    margin: 10px 0;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+    border: 2px solid purple;
+    width: 100%;
+}
+
+.more-reviews-btn{
+    background-color: purple;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    width: 200px;
+    font-weight: bold;
+}
