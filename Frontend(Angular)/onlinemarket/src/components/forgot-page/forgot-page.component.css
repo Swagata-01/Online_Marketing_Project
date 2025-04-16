@@ -1,0 +1,52 @@
+.container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 20px;
+    margin-bottom: 100px;
+}
+
+.signin h2 {
+    background-color: navy;
+    color: white;
+    padding: 10px;
+} 
+
+input {
+    width: 65%;
+    padding: 10px;
+    margin: 10px 0;
+    text-align: center;
+    border: 2px solid lightblue;
+}
+
+.submit {
+    background-color: purple;
+    color: white;
+    padding: 10px;
+    border: none;
+    width: 50%;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.divider {
+    width: 3px;
+    height: 200px;
+    background-color: gray;
+    margin: 0 20px;
+}
+
+.signin {
+    display: flex;
+    align-items: center;
+}
+
+.signin-btn {
+    background-color: purple;
+    color: white;
+    padding: 15px 58px;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+}
