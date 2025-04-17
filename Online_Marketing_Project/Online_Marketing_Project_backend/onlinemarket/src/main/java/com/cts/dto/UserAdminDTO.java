@@ -27,14 +27,20 @@ public class UserAdminDTO {
 
     private String password = "Abc@123";
 
-    @NotBlank(message= "Photo is required")
+    @NotBlank(message = "Photo is required")
     private byte[] photo;
 
     @NotBlank(message = "Nickname is required")
     private String nickName;
 
-    @NotBlank(message = "Address is required")
-    private String address;
+    @NotBlank(message = "Address Line 1 is required")
+    private String addressLine1;
+
+    @NotBlank(message = "Address Line 2 is required")
+    private String addressLine2;
+
+    @NotBlank(message = "Postal Code is required")
+    private int postalCode;
 
     @NotBlank(message = "Contact number is required")
     private String contactNumber;
@@ -44,10 +50,14 @@ public class UserAdminDTO {
 
     private boolean isAdmin; 
     
-    @NotBlank(message="User role is required")
+    @NotBlank(message = "User role is required")
     private UserRole userRole;
 
     public void setUserRoleBasedOnAdminFlag() {
         this.userRole = isAdmin ? UserRole.ADMIN : UserRole.USER;
+    }
+
+    public String getAddress() {
+        return String.format("%s, %s, %s", addressLine1, addressLine2, postalCode);
     }
 }

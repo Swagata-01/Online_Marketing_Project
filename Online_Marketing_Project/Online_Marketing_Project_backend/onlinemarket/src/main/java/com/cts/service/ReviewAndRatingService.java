@@ -83,6 +83,16 @@ public class ReviewAndRatingService {
             return reviewDTO;
         }).collect(Collectors.toList());
     }
-
+    
+    
+    public List<ReviewAndRatingDTO> getReviewsByUserId(int userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new InvalidInputException("User not found"));
+        List<ReviewsAndRatings> reviews = reviewRepository.findByUser(user);
+        
+        return reviews.stream()
+                      .map(review -> new ReviewAndRatingDTO(review))
+                      .collect(Collectors.toList());
+    }
+ 
     
 }

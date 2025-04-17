@@ -56,7 +56,9 @@ public class UserAdminController {
         @RequestParam String lastName,
         @RequestParam String email,
         @RequestParam String nickName,
-        @RequestParam String address,
+        @RequestParam String addressLine1,
+        @RequestParam String addressLine2,
+        @RequestParam int postalCode,
         @RequestParam String contactNumber,
         @RequestParam String dateOfBirth,
         @RequestParam boolean isAdmin,
@@ -70,7 +72,9 @@ public class UserAdminController {
         createUser.setLastName(lastName);
         createUser.setEmail(email);
         createUser.setNickName(nickName);
-        createUser.setAddress(address);
+        createUser.setAddressLine1(addressLine1);
+        createUser.setAddressLine2(addressLine2);
+        createUser.setPostalCode(postalCode);
         createUser.setContactNumber(contactNumber);
         createUser.setDateOfBirth(dob);
         createUser.setAdmin(isAdmin);
@@ -80,6 +84,7 @@ public class UserAdminController {
 
         return ResponseEntity.ok(savedUser);
     }
+
     
     @GetMapping("/admin/viewProfile")
     public ResponseEntity<User> searchUserByEmailId(@RequestParam String email){

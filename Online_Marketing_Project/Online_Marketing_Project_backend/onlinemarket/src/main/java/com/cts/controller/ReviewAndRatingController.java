@@ -63,14 +63,14 @@ public class ReviewAndRatingController {
     
     //Add reviews based on user ID
     
-//    @GetMapping("/user/{userId}")
-//    public ResponseEntity<List<ReviewAndRatingDTO>> getUserReviews(@PathVariable int userId) {
-//        try {
-//            List<ReviewAndRatingDTO> userReviews = reviewService.getUserReviews(userId);
-//            return ResponseEntity.ok(userReviews);
-//        } catch (InvalidInputException e) {
-//            return ResponseEntity.badRequest().body(null);
-//        }
-//    }
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<ReviewAndRatingDTO>> getUserReviews(@PathVariable int userId) {
+        try {
+            List<ReviewAndRatingDTO> userReviews = reviewService.getReviewsByUserId(userId);
+            return ResponseEntity.ok(userReviews);
+        } catch (InvalidInputException e) {
+            return ResponseEntity.badRequest().body(null);
+        }
+    }
     
 }

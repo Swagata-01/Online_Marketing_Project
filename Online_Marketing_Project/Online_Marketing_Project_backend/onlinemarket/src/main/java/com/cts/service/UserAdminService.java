@@ -36,13 +36,12 @@ public class UserAdminService {
 
     @Autowired
     private UserValidationService userValidationService;
-    
+
     @Autowired
     private ProductRepository productRepository;
-    
+
     @Autowired
     private ReviewAndRatingRepository reviewRepository;
-    
 
     public User createUser(UserAdminDTO userAdminDTO, MultipartFile imageFile) throws IOException {
         User user = UserAdminMapper.toEntity(userAdminDTO);
@@ -50,30 +49,34 @@ public class UserAdminService {
         userValidationService.validate(user);
         user.setPassword(PasswordUtil.hashPassword(user.getPassword()));
 
+        // Construct address dynamically from addressLine1, addressLine2, and postalCode
+        String fullAddress = String.format("%s, %s, %s", 
+            userAdminDTO.getAddressLine1(), 
+            userAdminDTO.getAddressLine2(), 
+            userAdminDTO.getPostalCode());
+
+        user.setAddress(fullAddress);
+
         return userRepository.save(user);
     }
-    
-    
+
+    // No changes are required in the other methods; they can remain as is.
     public User searchUserByEmailId(String email) {
-    	return userRepository.findByEmail(email);
+        return userRepository.findByEmail(email);
     }
-    
-    
 
-    public User updateUserByEmail(Boolean isActive,String email) throws IOException, ParseException {
-
-			User user = userRepository.findByEmail(email);
-			if (user != null) {
-				if (isActive != null) {
-		            user.setActive(isActive);
-		        }
-				return userRepository.save(user);
-			} 
-			else {
-				throw new RuntimeException("User with email " + email + " not found.");
-			}
+    public User updateUserByEmail(Boolean isActive, String email) throws IOException, ParseException {
+        User user = userRepository.findByEmail(email);
+        if (user != null) {
+            if (isActive != null) {
+                user.setActive(isActive);
+            }
+            return userRepository.save(user);
+        } else {
+            throw new RuntimeException("User with email " + email + " not found.");
+        }
     }
-    
+
     public List<ProductSubscription> getSubscriptionsByEmail(String email) {
         User user = userRepository.findByEmail(email);
         if (user == null) {
@@ -81,8 +84,7 @@ public class UserAdminService {
         }
         return user.getProductSubscriptionList();
     }
-    
-    
+
     public List<ReviewsAndRatings> getReviewsByEmail(String email) {
         User user = userRepository.findByEmail(email);
         if (user == null) {
@@ -114,8 +116,7 @@ public class UserAdminService {
         existingReview.setReviewUpdateOn(Timestamp.from(Instant.now()));
         return reviewRepository.save(existingReview);
     }
-    
-    
+
     public ProductSubscription updateSubscriptionByEmail(String email, int subscriptionId, boolean optInStatus) {
         User user = userRepository.findByEmail(email);
         if (user == null) {
@@ -129,17 +130,11 @@ public class UserAdminService {
             throw new RuntimeException("The subscription does not belong to the user with email " + email);
         }
 
-        subscription.setOptIn(optInStatus); 
-        subscription.setUpdatedOn(LocalDateTime.now()); 
+        subscription.setOptIn(optInStatus);
+        subscription.setUpdatedOn(LocalDateTime.now());
         productRepository.save(subscription.getProducts());
         return subscription;
     }
-
-    
-    
-    //for getting user details in excel
-    
-
 
     public byte[] generateExcelFileWithAllUsers() throws IOException {
         List<User> users = userRepository.findAll();
@@ -151,6 +146,7 @@ public class UserAdminService {
             header.createCell(2).setCellValue("Last Name");
             header.createCell(3).setCellValue("Email");
             header.createCell(4).setCellValue("Date of Birth");
+            header.createCell(5).setCellValue("Address");
 
             int rowIdx = 1;
             for (User user : users) {
@@ -160,6 +156,7 @@ public class UserAdminService {
                 row.createCell(2).setCellValue(user.getLastName());
                 row.createCell(3).setCellValue(user.getEmail());
                 row.createCell(4).setCellValue(user.getDateOfBirth().toString());
+                row.createCell(5).setCellValue(user.getAddress());
             }
             try (ByteArrayOutputStream out = new ByteArrayOutputStream()) {
                 workbook.write(out);
@@ -167,5 +164,4 @@ public class UserAdminService {
             }
         }
     }
-
 }
