@@ -13,7 +13,13 @@ public class UserAdminMapper {
             .password(userAdminDTO.getPassword())
             .photo(userAdminDTO.getPhoto())
             .nickName(userAdminDTO.getNickName())
-            .address(userAdminDTO.getAddress())
+            .addressLine1(userAdminDTO.getAddressLine1())
+            .addressLine2(userAdminDTO.getAddressLine2())
+            .postalCode(userAdminDTO.getPostalCode())
+            .address(String.format("%s, %s, %s",
+                userAdminDTO.getAddressLine1(),
+                userAdminDTO.getAddressLine2(),
+                userAdminDTO.getPostalCode()))
             .contactNumber(userAdminDTO.getContactNumber())
             .dateOfBirth(userAdminDTO.getDateOfBirth())
             .userRole(userAdminDTO.getUserRole())
