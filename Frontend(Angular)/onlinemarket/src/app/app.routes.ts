@@ -50,10 +50,6 @@ export const routes: Routes = [
         component : ProductDetailsComponent
     },
     {
-        path : 'product-details/:id',
-        component : ProductDetailsComponent
-    },
-    {
         path : 'forgot-page',
         component : ForgotPageComponent
     },

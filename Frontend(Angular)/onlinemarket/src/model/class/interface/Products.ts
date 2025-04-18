@@ -12,6 +12,19 @@ export interface ISigninResponse{
     email : String
 }
 
+export interface IRatingDTO{
+ratingId : number,
+productid : number,
+productName : String,
+userId : number,
+rating : number,
+review : String,
+reviewCreatedOn : Date,
+reviewUpdatedOn : Date,
+reviewDeletedOn : Date,
+reviewActiveStatus : boolean
+}
+
 export type IUserIdResponse = number;
 
 

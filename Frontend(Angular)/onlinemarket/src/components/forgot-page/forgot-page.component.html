@@ -10,8 +10,9 @@
 
             <re-captcha (resolved)="onCaptchaResolved($event)"
                 siteKey="6Lf_uRMrAAAAAMXgbKvXDk9Mmwza9GaZY3bvoRFG"></re-captcha>
-
+            <div class="column">
             <button type="submit" class="submit">Submit</button>
+            </div>
         </form>
 
         <!-- <p *ngIf="message" class="message">{{ message }}</p> -->
@@ -19,6 +20,6 @@
     </div>
     <div class="divider"></div>
     <div class="signin">
-        <button class="signin-btn" [routerLink]="'/signIn'">Sign In</button>
+        <button class="signin-btn" [routerLink]="'/signin'">Sign In</button>
     </div>
 </div>

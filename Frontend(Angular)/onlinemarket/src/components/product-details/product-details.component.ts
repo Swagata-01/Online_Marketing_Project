@@ -7,7 +7,7 @@ import { UserReviewComponent } from "../user-review/user-review.component";
 
 @Component({
   selector: 'app-product-details',
-  imports: [CommonModule, RouterModule, RouterOutlet, UserReviewComponent],
+  imports: [CommonModule, RouterModule, UserReviewComponent],
   templateUrl: './product-details.component.html',
   styleUrl: './product-details.component.css'
 })
@@ -19,6 +19,7 @@ export class ProductDetailsComponent {
 
   constructor(private route: ActivatedRoute, private http: HttpClient) { }
 
+  
 
   ngOnInit() {
     const productId = this.route.snapshot.paramMap.get('id');

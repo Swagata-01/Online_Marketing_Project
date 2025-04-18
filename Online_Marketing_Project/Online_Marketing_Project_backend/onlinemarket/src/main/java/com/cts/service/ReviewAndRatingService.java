@@ -68,13 +68,16 @@ public class ReviewAndRatingService {
     }
 
     public List<ReviewAndRatingDTO> getAllReviews() {
+    	
     	return reviewRepository.findAll().stream()
     	        .filter(review -> review.isReviewActiveStatus())
     	        .map(review -> {
             ReviewAndRatingDTO reviewDTO = new ReviewAndRatingDTO();
             reviewDTO.setRatingId(review.getRatingId());
-            reviewDTO.setProducts(review.getProducts());
-            reviewDTO.setUser(review.getUser());
+//            reviewDTO.setProducts(review.getProducts());
+//            reviewDTO.setUser(review.getUser());
+            reviewDTO.setProductid(review.getProducts().getProductid());
+            reviewDTO.setUserId(review.getUser().getUserID());
             reviewDTO.setRating(review.getRating());
             reviewDTO.setReview(review.getReview());
             reviewDTO.setReviewCreatedOn(review.getReviewCreatedOn());
@@ -87,9 +90,10 @@ public class ReviewAndRatingService {
     
     public List<ReviewAndRatingDTO> getReviewsByUserId(int userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new InvalidInputException("User not found"));
-        List<ReviewsAndRatings> reviews = reviewRepository.findByUser(user);
+        List<ReviewsAndRatings> reviews = (List<ReviewsAndRatings>) reviewRepository.findByUser(user);
         
         return reviews.stream()
+        		.filter(review -> review.isReviewActiveStatus())
                       .map(review -> new ReviewAndRatingDTO(review))
                       .collect(Collectors.toList());
     }

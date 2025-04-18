@@ -43,7 +43,9 @@ export class AppComponent implements OnInit {
   }
 
   get isAdmin(): boolean {
-    return this.loggedIn && this.userDetails?.userRole === 'admin';
+    
+     return this.isLoggedIn() && this.userDetails?.userRole === 'ADMIN' ;
+    // return this.userDetails?.userRole === 'ADMIN';
   }
 
   logout(): void {

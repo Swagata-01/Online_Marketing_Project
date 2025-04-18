@@ -28,21 +28,23 @@ export class ProductService {
 
   private baseUrl = 'http://localhost:9090/OMP'; // Update with your backend URL
 
-  addProduct(name: string, description: string, imageFile: File): Observable<any> {
+  addProduct(name: string, description: string, imageFile: File, isActive: boolean): Observable<any> {
     const formData: FormData = new FormData();
     formData.append('name', name);
     formData.append('description', description);
     formData.append('imageFile', imageFile);
+    formData.append('isActive',isActive.toString());
 
     return this.http.post(`${this.baseUrl}/admin/addProduct`, formData);
   }
 
-  updateProduct(name: string, upName: string, description: string, imageFile?: File): Observable<any> {
+  updateProduct(name: string, upName: string, description: string, imageFile?: File, isActive?: boolean): Observable<any> {
     const formData: FormData = new FormData();
     formData.append('name', name);
     if (upName) formData.append('upName', upName);
     if (description) formData.append('description', description);
     if (imageFile) formData.append('imageFile', imageFile);
+    if(isActive!= undefined) formData.append('isActive', isActive.toString());
 
     return this.http.put(`${this.baseUrl}/admin/updateProduct/${name}`, formData);
   }

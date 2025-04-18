@@ -431,7 +431,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
 
-    public Products addProduct(String name, String description, MultipartFile imageFile) throws IOException {
+    public Products addProduct(String name, String description, MultipartFile imageFile, Boolean isActive) throws IOException {
  
         Products product = new Products();
  
@@ -440,17 +440,18 @@ public class ProductServiceImpl implements ProductService {
         product.setDescription(description);
  
         product.setImages(imageFile.getBytes());
+        product.setIsActive(isActive);
  
         return productRepository.save(product);
  
     }
  
-    public Products updateProduct(String name, String upName, String description, MultipartFile imageFile) throws  InvalidInputException, IOException {
+    public Products updateProduct(String name, String upName, String description, MultipartFile imageFile,Boolean isActive) throws  InvalidInputException, IOException {
         Products product = productRepository.findByName(name).orElseThrow(() -> new InvalidInputException("Product not found with Name: " + name));
         if (upName != null)product.setName(upName);
         if (description != null)product.setDescription(description);
         if (imageFile != null)product.setImages(imageFile.getBytes());
-       
+        if (isActive != null)product.setIsActive(isActive);
  
         return productRepository.save(product);
        
