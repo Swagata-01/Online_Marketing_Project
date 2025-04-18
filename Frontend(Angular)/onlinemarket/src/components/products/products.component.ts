@@ -7,7 +7,7 @@ import { ProductService } from '../../services/product.service';
 
 @Component({
   selector: 'app-products',
-  imports: [CommonModule, RouterOutlet, RouterModule, FormsModule, SearchfilterComponent],
+  imports: [CommonModule,RouterModule, FormsModule, SearchfilterComponent],
   templateUrl: './products.component.html',
   styleUrl: './products.component.css',
   providers : [ProductService]

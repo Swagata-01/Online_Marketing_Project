@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import com.cts.dto.ReviewAndRatingDTO;
 import com.cts.entity.ReviewsAndRatings;
 import com.cts.entity.User;
 

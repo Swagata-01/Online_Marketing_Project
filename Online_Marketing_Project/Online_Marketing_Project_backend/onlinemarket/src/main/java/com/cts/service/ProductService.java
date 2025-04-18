@@ -71,7 +71,7 @@ public interface ProductService {
 
 	public ProductViewDTO viewProductById(int id);
 
-	public Products addProduct(String name, String description, MultipartFile imageFile) throws IOException;
+	public Products addProduct(String name, String description, MultipartFile imageFile,Boolean isActive) throws IOException;
  
  
 	public byte[] getProductImage(int id);
@@ -87,7 +87,7 @@ public interface ProductService {
 
 	//public List<ProductSubscription> getSubscriptionsByEmail(String email);
  
-	 public Products updateProduct (String name, String upName, String description, MultipartFile imageFile) throws InvalidProductException, IOException;
+	 public Products updateProduct (String name, String upName, String description, MultipartFile imageFile, Boolean isActive) throws InvalidProductException, IOException;
  
 	//public List<ReviewsAndRatings> getReviewsByEmail(String email);
 

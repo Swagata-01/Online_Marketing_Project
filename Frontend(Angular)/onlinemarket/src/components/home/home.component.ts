@@ -1,25 +1,29 @@
 import { Component, inject, OnInit, OnDestroy } from '@angular/core';
-import { IProductDTO } from '../../model/class/interface/Products';
+import { IProductDTO, IRatingDTO } from '../../model/class/interface/Products';
 import { ProductService } from '../../services/product.service';
 import { CommonModule } from '@angular/common';
 import { UserService } from '../../services/user.service';
 import { take, Subscription } from 'rxjs';
+import { Router, RouterModule, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule],
+  imports: [CommonModule,RouterModule],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
-  providers : [UserService,ProductService]
+  providers: [UserService, ProductService]
 })
 export class HomeComponent implements OnInit, OnDestroy {
   userSpecificSubscriptions: IProductDTO[] = [];
   TopSubscribedProductList: IProductDTO[] = [];
   TopRatedProductsList: IProductDTO[] = [];
+  userSpecificRatings: IRatingDTO[] = [];
   isLoggedIn: boolean = false;
   loadingUserSubscriptions: boolean = false;
   userIdSubscription: Subscription | undefined;
+  loadingUserRatings: boolean = false;
 
+  router = inject(Router);
   productService = inject(ProductService);
   userService = inject(UserService);
 
@@ -34,6 +38,10 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
   }
 
+  viewProductDetails(productId: number) {
+    this.router.navigate(['/product-details', productId]);
+  }
+  
   subscribeToUserIdChanges(): void {
     this.userIdSubscription = this.userService.watchUserId().subscribe(newUserId => {
       this.isLoggedIn = newUserId !== null;
@@ -45,6 +53,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.isLoggedIn = this.userService.userId !== null;
     if (this.isLoggedIn) {
       this.loadUserSpecificSubscriptions();
+      this.loadUserSpecificRatings();
       this.loadDefaultTopRated();
     } else {
       this.loadDefaultTopSubscribed();
@@ -110,4 +119,29 @@ export class HomeComponent implements OnInit, OnDestroy {
       }
     });
   }
+
+
+loadUserSpecificRatings(): void {
+  const userId = this.userService.userId;
+  if (userId !== null) {
+    this.loadingUserRatings = true;
+    this.userService.getProductRatingList(userId).pipe(take(1)).subscribe({
+      next: (ratings: IRatingDTO[]) => {
+        this.userSpecificRatings = ratings.slice(0, 2); // Display only 2 ratings
+        console.log('User Ratings:', this.userSpecificRatings);
+      },
+      error: (error) => {
+        alert('Cannot load Your Rated Products');
+        console.error(error);
+      },
+      complete: () => {
+        this.loadingUserRatings = false;
+        console.log('Successfully loaded Your Rated Products completed');
+      }
+    });
+  } else {
+    this.userSpecificRatings = []; // Clear previous user's data
+  }
+  }
+
 }

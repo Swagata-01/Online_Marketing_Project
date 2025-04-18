@@ -4,7 +4,7 @@
     <div class="nav-left">
       <a class="menu-link" id="home" [routerLink]="'/home'" routerLinkActive="active">Home</a>
       <a class="menu-link" id="products" [routerLink]="'/products'" routerLinkActive="active">Products</a>
-      <a class="menu-link" id="admin" *ngIf="!loggedIn || isAdmin" [routerLink]="'/admin'" routerLinkActive="active">Admin</a>
+      <a class="menu-link" id="admin" *ngIf="loggedIn || isAdmin" [routerLink]="'/admin'" routerLinkActive="active">Admin</a>
       <a class="menu-link" id="help"  [routerLink]="'/help'" routerLinkActive="active">Help</a>
     </div>
     <div class="nav-right">

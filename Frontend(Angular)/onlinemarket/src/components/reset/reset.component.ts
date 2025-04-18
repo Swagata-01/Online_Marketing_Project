@@ -77,7 +77,7 @@ export class ResetComponent implements OnInit {
             next: (response: string) => {
                 alert(response); 
                 setTimeout(() => {
-                    this.router.navigate(['/signIn']);
+                    this.router.navigate(['/signin']);
                 }, 1000);
             },
             error: (error) => {

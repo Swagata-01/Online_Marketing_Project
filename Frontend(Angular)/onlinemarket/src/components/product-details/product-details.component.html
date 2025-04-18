@@ -1,5 +1,5 @@
 <!-- product-details.component.html -->
-<div class="specific-product-information">
+<!-- <div class="specific-product-information">
     <div id="product-details" class="specific-product-details">
     <div class="product-image-container" *ngIf="product">
       <div>
@@ -9,7 +9,6 @@
       <div>
         <p class="product-meta" id="product-meta">
           {{product.name}} 
-          <!-- <br> 200 Subscribers <br> 4 Stars -->
            <br>{{product.subscription_count}} subscribes
            <br>
            {{product.avg_rating}} stars
@@ -17,8 +16,8 @@
       </div>
     </div>
   
-    <div class="product-desc-container">
-      <ul class="product-description">
+    <div class="product-desc-container"> -->
+      <!-- <ul class="product-description">
         <li><i>{{product?.description}}</i></li>
       </ul>
   
@@ -28,25 +27,64 @@
       </div>
     </div>
   
-    <!-- <div class="product-review-container"> -->
-      <app-user-review></app-user-review>
-      <!-- <h3>Users Reviews</h3>
-      <div class="review-card">
-        <p><strong>Saranya – 5 Stars</strong></p>
-        <p><em>This product is so tasty and worth to have it.</em></p>
-      </div>
-      <button class="more-reviews-btn">Click For More</button>  -->
-      <!-- (click)="openPopup()" -->
-    <!-- </div>  -->
+      
   <div *ngIf="!product">
     <p>Product Not Found</p>
+  </div> -->
+
+  <!-- <div>
+    <h3>Add a Review</h3><br><br>
+    <p>Username</p>
+    <p>Stars for Ratings</p>
+    <input type="text" placeholder="Review Descriptions">
+  </div> -->
+<!-- </div>
+</div> -->
+
+<!-- product-details.component.html -->
+<div class="specific-product-information">
+  <div id="product-details" class="specific-product-details">
+  <div class="product-image-container" *ngIf="product">
+    <div>
+      <h3>{{product.name}}</h3>
+    </div>
+    <img [src]="'http://localhost:9090/OMP/product/image/' + product.productid" alt="{{product.name}}" class="product-image">
+    <div>
+      <p class="product-meta" id="product-meta">
+        {{product.name}}
+        <!-- <br> 200 Subscribers <br> 4 Stars -->
+         <br>{{product.subscription_count}} subscribes
+         <br>
+         {{product.avg_rating}} stars
+      </p>
+    </div>
   </div>
 
+  <div class="product-desc-container">
+    <ul class="product-description">
+      <li><i>{{product?.description}}</i></li>
+    </ul>
+
+    <div class="button-container">
+      <button class="subscribe-btn" >Subscribe</button>
+      <button class="review-btn" >Add a Review</button>
+    </div>
+  </div>
+
+  <!-- <div class="product-review-container"> -->
+    <app-user-review></app-user-review>
+    <!-- <h3>Users Reviews</h3>
+    <div class="review-card">
+      <p><strong>Saranya – 5 Stars</strong></p>
+      <p><em>This product is so tasty and worth to have it.</em></p>
+    </div>
+    <button class="more-reviews-btn">Click For More</button>  -->
+    <!-- (click)="openPopup()" -->
+  <!-- </div>  -->
+<div *ngIf="!product">
+  <p>Product Not Found</p>
+</div>
+
 </div>
 </div>
-<!-- <app-subscribe-product #subscriptionPopup></app-subscribe-product>
-<app-add-review-product #addReviewPopup></app-add-review-product> -->
 
-
-
-  

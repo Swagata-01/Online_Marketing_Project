@@ -3,7 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, tap, BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
 import { CookieServiceService } from './cookie-service.service';
-import { IUserDetails, IUserIdResponse, IProductDTO } from '../model/class/interface/Products';
+import { IUserDetails, IUserIdResponse, IProductDTO, IRatingDTO } from '../model/class/interface/Products';
 
 @Injectable({
   providedIn: 'root'
@@ -38,6 +38,11 @@ export class UserService {
   getProductSubscriptionList(userId: number): Observable<IProductDTO[]> {
     const params = new HttpParams().set('userId', userId.toString());
     return this.http.get<IProductDTO[]>('http://localhost:9090/OMP/getProductSubscriptionList', { params });
+  }
+
+  getProductRatingList(userId: number): Observable < IRatingDTO[] > {
+    const params = new HttpParams().set('userId', userId.toString());
+    return this.http.get<IRatingDTO[]>('http://localhost:9090/OMP/reviews/user/' + userId, { params });
   }
 
   register(formData: FormData): Observable<any> {

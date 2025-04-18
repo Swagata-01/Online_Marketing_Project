@@ -17,7 +17,7 @@ export class AdminDashboardComponent {
   // Single Add Product
   productName: string = '';
   productDescription: string = '';
-  isActive: boolean = true;
+  isActive: boolean = false;
   selectedImageFile: File | null = null;
   imagePreview: string | null = null;
   showAddProductPopup: boolean = false;
@@ -36,7 +36,7 @@ export class AdminDashboardComponent {
     id: '',
     name: '',
     description: '',
-    active: true,
+    active: false,
     image: null,
     imageUrl: ''
   };
@@ -70,7 +70,7 @@ export class AdminDashboardComponent {
  
   submitProduct() {
     if (this.selectedImageFile) {
-      this.productService.addProduct(this.productName, this.productDescription, this.selectedImageFile)
+      this.productService.addProduct(this.productName, this.productDescription, this.selectedImageFile,this.isActive)
         .subscribe(response => {
           alert('Product added successfully');
           this.closeAddProductPopup();
@@ -83,7 +83,7 @@ export class AdminDashboardComponent {
   resetAddProductForm() {
     this.productName = '';
     this.productDescription = '';
-    this.isActive = true;
+    this.isActive = false;
     this.selectedImageFile = null;
     this.imagePreview = null;
   }
@@ -159,7 +159,7 @@ export class AdminDashboardComponent {
  
   updateProduct() {
     const imageFile = this.product.image !== null ? this.product.image : undefined;
-    this.productService.updateProduct(this.product.name, this.product.name, this.product.description, imageFile)
+    this.productService.updateProduct(this.product.name, this.product.name, this.product.description, imageFile,this.product.active)
       .subscribe(response => {
         alert('Product updated successfully!');
         this.showUpdatePopup = false;

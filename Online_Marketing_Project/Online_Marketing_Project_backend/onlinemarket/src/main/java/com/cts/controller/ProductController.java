@@ -411,11 +411,12 @@ public class ProductController {
 
             @RequestParam String description,
 
-            @RequestParam MultipartFile imageFile) throws IOException
+            @RequestParam MultipartFile imageFile,
+            @RequestParam Boolean isActive) throws IOException
 
 	{
 
-	 return ResponseEntity.ok(productService.addProduct(name, description, imageFile));
+	 return ResponseEntity.ok(productService.addProduct(name, description, imageFile,isActive));
 
 	}
 
@@ -483,10 +484,11 @@ public class ProductController {
             @PathVariable String name,
             @RequestParam(required=false)  String upName,
             @RequestParam (required=false) String description,
-            @RequestParam (required=false) MultipartFile imageFile) throws Exception
+            @RequestParam (required=false) MultipartFile imageFile,
+            @RequestParam(required=false) Boolean isActive) throws Exception
             
     {
-        return ResponseEntity.ok(productService.updateProduct(name, upName, description, imageFile));
+        return ResponseEntity.ok(productService.updateProduct(name, upName, description, imageFile, isActive));
     }
 
 	@PostMapping("/addSubscription")
